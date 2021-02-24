@@ -1,2 +1,2 @@
-# CLoud
+# Cloud
 Learning in the cloud
