@@ -19,8 +19,9 @@ provider "azurerm" {
 
 # Creating a resource group
 resource "azurerm_resource_group" "rg" {
-  name     = "GroupForThings"
-  location = var.location
+  name      = "DELETE_this_GROUP"
+  location  = var.location
+  tags = var.tags
 }
 
 # The above works lets build on it!
@@ -29,6 +30,7 @@ resource "azurerm_virtual_network" "vnet" {
   name                = "vnetforfun"
   address_space       = ["10.0.0.0/16"]
   location            = var.location
+  tags                = var.tags
   resource_group_name = azurerm_resource_group.rg.name
   
 }
