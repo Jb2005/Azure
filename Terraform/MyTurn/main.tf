@@ -21,16 +21,33 @@ provider "azurerm" {
 resource "azurerm_resource_group" "rg" {
   name      = "DELETE_this_GROUP"
   location  = var.location
-  tags = var.tags
+  tags = var.Devtags
 }
 
 # The above works lets build on it!
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = "vnetforfun"
+  name                = "ToConnectThemAll"
   address_space       = ["10.0.0.0/16"]
   location            = var.location
-  tags                = var.tags
+  tags                = var.Devtags
   resource_group_name = azurerm_resource_group.rg.name
-  
+}
+
+resource "azurerm_public_ip" "example" {
+  name                = "PublicIPForLB"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.rg.name
+  allocation_method   = "Static"
+}
+
+resource "azurerm_lb" "example" {
+  name                = "BlanceTheTraffic"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  frontend_ip_configuration {
+    name                 = "PublicIPAddress"
+    public_ip_address_id = azurerm_public_ip.example.id
+  }
 }

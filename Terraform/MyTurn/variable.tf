@@ -1,0 +1,4 @@
+
+variable "location" { }
+
+variable "Devtags" { }
