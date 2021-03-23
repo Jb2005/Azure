@@ -33,8 +33,10 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.dev.name
 }
 
+# Bastion will only work on a subnet called AzureBastionSubnet
+# Subnet with name 'AzureBastionSubnet' can be used only for the Azure Bastion resource."
 resource "azurerm_subnet" "snet" {
-  name                 = "internal"
+  name                 = "AzureBastionSubnet"
   resource_group_name  = "DELETE_this_GROUP"
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.2.0/24"]
@@ -80,6 +82,8 @@ resource "azurerm_linux_virtual_machine" "vmmosya" {
     sku       = "16.04-LTS"
     version   = "latest"
   }
+# Above works lets build on it! 23-03-2021
+# Below in is progress.
 
 # It looks like the below example is not the best route.
 # According to the docs for Azure I should use custom_data in the VM set up
